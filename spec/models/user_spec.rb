@@ -23,7 +23,6 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-hahah:
 
 require 'spec_helper'
 

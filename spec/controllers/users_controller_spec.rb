@@ -20,6 +20,27 @@ describe UsersController do
       response.should have_tag("title", /Sign up/)
     end
 
+   it "should have a 'name' field" do
+      get :new
+      response.should have_tag("input[name=?][type=?]", "user[name]", "text")
+   end
+
+   it "should have an 'email' field" do
+      get :new
+      response.should have_tag("input[name=?][type=?]", "user[email]", "text")
+   end
+
+   it "should have a 'password' field" do
+      get :new
+      response.should have_tag("input[name=?][type=?]", "user[password]", "password")
+   end
+
+   it "should have a 'password confirmation' field" do
+      get :new
+      response.should have_tag("input[name=?][type=?]", "user[password_confirmation]",
+                               "password")
+   end
+
   end
 
    describe "GET 'show'" do
@@ -58,7 +79,7 @@ describe UsersController do
             @attr = { :name => "", :email => "", :password => "", 
                       :password_confirmation => "" }
             @user = Factory.build(:user, @attr)
-            @user.stub!(:new).and_return(@user)
+            User.stub!(:new).and_return(@user)
             @user.should_receive(:save).and_return(false)
          end
 
@@ -77,12 +98,12 @@ describe UsersController do
       describe "success" do
 
          before(:each) do
-            @attr = { :name => "Luiza",
-                      :email => "luiza@onet.pl",
-                      :password => "qwerty",
-                      :password_confirmation => "qwerty" }
+            @attr = { :name => "New User",
+                      :email => "user@example.com",
+                      :password => "foobar",
+                      :password_confirmation => "foobar" }
             @user = Factory(:user, @attr)
-            @user.stub!(:new).and_return(@user)
+            User.stub!(:new).and_return(@user)
             @user.should_receive(:save).and_return(true)
          end
 
